@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+{% block title %}Objednávky{% endblock %}
+{% block body%}
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      fixedWeekCount: false,
+      locale: 'cs',
+      timeZone: 'UTC',
+      editable: true,
+      selectable: true,
+      firstDay: 1,
+      headerToolbar: {
+        start:'',
+        center: 'title',
+        end: 'today prev,next'
+      },
+
+      events:"/json/events.json",
+      eventContent: function(arg) {
+        return  {html : "<span>" + (arg.event.id) + "</span>" + arg.event.title}
+      },
+      select: function(arg){
+        window.location.href="/newEvent/"+moment(arg.start, "YYYY-MM-DD").format("Y-MM-DD") + "/" + moment(arg.end, "YYYY-MM-DD").format("Y-MM-DD");
+      },
+      eventClick: function(arg) {
+        window.location.href="/updateEvent/" + arg.event.id;
+      }
+    });
+    calendar.render();
+  });
+
+  </script>
+  <div class="page container-fluid">
+    {% if message is defined %}
+    <div id="message"> {{ message }}</div>
+    {% endif %}
+      <div class="row">
+        <div class="col-8">
+        <div id='calendar'></div>
+      </div>
+      <div class="col-4">
+    <div id='form'>
+      {% if form is defined %}
+      <div class='eventForm'>
+        {{ form_start(form) }}
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.close) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.title) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" id="some-custom-id">
+            {{ form_row(form.name) }}
+          </div>
+          <div class="col" id="some-custom-id">
+            {{ form_row(form.address) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.phone)}}
+          </div>
+          <div class="col">
+            {{ form_row(form.startDate) }}
+          </div>
+          <div class="col">
+            {{ form_row(form.endDate) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.description) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.poolType) }}
+          </div>
+          <div class="col">
+            {{ form_row(form.stairsPosition) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.file) }}
+            {% if event.file.id is defined %}
+            <span id="file_delete" file_id={{event.file.id}} event_id={{event.id}} class="btn btn-outline-danger">Smazat soubor</span><a target="_blank" href="http://portfolio.clanweb.eu/files/{{event.file.path}}">{{event.file.path}}</a></span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="float-right">
+              {{ form_row(form.done) }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.save) }}
+          </div>
+        </div>
+        <div class="row">
+          {% if form.delete is defined %}
+          <div class="col">
+            {{ form_row(form.delete) }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {{ form_end(form) }}
+      {% endif %}
+    </div>
+    </div>
+    </div>
+  </div>
+</body>
+</html>
+{%endblock%}

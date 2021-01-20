@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio{% endblock %}
+
+{% block body %}
+<div class="page container-fluid">
+  <h1>Portfolio</h1>
+  <h2>Přehled objednávek pro rodinnou firmu vyrábějící bazény</h2>
+  <p>Aplikace je určena pro přehled objednávek, zobrazení seznamu bazénů,
+    kalkulaci ceníku materiálu a bazénového příslušenství.</p>
+    <h3>Funkce aplikace</h3>
+    <ul class="list-unstyled">
+      <li>Objednávky</li>
+      <li>
+        <ul>
+          <li>Vytvoření objednávky<span><i class="icon fas fa-check-circle"></i></span></li>
+          <li>Upravení objednávky<span><i class="icon fas fa-check-circle"></i></span></li>
+          <li>Smazaní objednávky<span><i class="icon fas fa-check-circle"></i></span></li>
+        </ul>
+      </li>
+      <li>Seznamy</li>
+      <li>
+        <ul>
+          <li>Seznam bazénů podle datumu<span><i class="icon fas fa-check-circle"></i></span></li>
+          <li>Export seznamu do PDF <i class="icon fas fa-times-circle"></i></li>
+          <li>Stránkování <i class="icon fas fa-times-circle"></i></li>
+        </ul>
+      </li>
+      <li>Ceníky</li>
+      <li>
+        <ul>
+          <li>Ceník materiálu<span><i class="icon fas fa-times-circle"></i></span></li>
+          <li>Ceník bazénového příslušenství<span><i class="icon fas fa-times-circle"></i></span></li>
+        </ul>
+      </li>
+      <li>iDoklad<span><i class="icon fas fa-spinner"></i></span></li>
+    </ul>
+    <ul>
+    </ul>
+    <p>V aplikaci můžete libovolně pracovat s objednávkami.</p>
+    <a target="_blank" href="https://github.com/Raptoorka/portfolio.git"><button class="btn btn-primary">Zdrojový kód</button></a>
+    <a href="/disambiguation"><button class="btn btn-info">Aplikace</button></a>
+  </div>
+  {% endblock %}

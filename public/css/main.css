@@ -1,0 +1,38 @@
+.page{
+  padding:20px;
+}
+.icon{
+margin-left: 10px;
+}
+.fa-times-circle{
+  color:red;
+}
+.fa-check-circle{
+  color:green;
+}
+.fa-spinner{
+  color:blue;
+}
+.fc-event-main{
+  padding: 10px 5px;
+}
+.fc-event-main span {
+  display: none;
+}
+.eventForm{
+  border:1px solid black;
+border-radius: 3%;
+padding: 20px;
+background: white;
+z-index: 2;
+}
+#message{
+  display:none;
+}
+.btn{
+  margin:5px 10px 0px 5px;
+}
+.btn-disambiguation{
+  height: 70px;
+  width:300px;
+}

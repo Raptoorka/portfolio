@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seznam bazénů{% endblock %}
+
+{% block body %}
+<div class="container">
+{{ form_start(form) }}
+<div class="row">
+  <div class="col">
+    {{ form_row(form.startDate) }}
+  </div>
+  <div class="col">
+    {{ form_row(form.endDate) }}
+  </div>
+</div>
+  <div class="row">
+    <div class="col">
+      {{ form_row(form.save) }}
+    </div>
+  </div>
+{{ form_end(form) }}
+<div class="row">
+  <table class="table table-bordered table-hover">
+    <tbody>
+    {% if events is defined %}
+    {% for event in events %}
+    <tr class="table-secondary">
+      <td><strong>Název:</strong> {{event.title}}</td>
+      <td><strong>Jméno a příjmení:</strong> {{event.name}}</td>
+      <td><strong>Datum:</strong> {{event.startDate|date('d/m/Y')}}-{{event.endDate|date('d/m/Y')}}</td>
+    </tr>
+    <tr>
+      <td colspan="3"><strong>Poznámky:</strong> <input style="width:100%;" type="text"></input></td>
+    </tr>
+  {% endfor %}
+{% endif %}
+</tbody>
+</table>
+</div>
+</div>
+
+{% endblock %}
+
