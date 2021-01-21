@@ -36,3 +36,11 @@ z-index: 2;
   height: 70px;
   width:300px;
 }
+.nav-cur-page{
+  margin: 0px 5px;
+  font-weight: bold;
+  color:blue;
+}
+.event-table{
+  margin-top:20px;
+}

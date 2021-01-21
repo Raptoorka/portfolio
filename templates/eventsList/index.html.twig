@@ -4,6 +4,9 @@
 
 {% block body %}
 <div class="container">
+  {% if form is defined %}
+  <h1>Seznam objednávek - bazénů</h1>
+  <p>Zobrazí seznam všech objednávek, které ještě nebyly dokončené podle vybraného data</p>
 {{ form_start(form) }}
 <div class="row">
   <div class="col">
@@ -19,25 +22,30 @@
     </div>
   </div>
 {{ form_end(form) }}
+  {% endif %}
 <div class="row">
-  <table class="table table-bordered table-hover">
+  <table class="table table-bordered table-hover event-table">
     <tbody>
-    {% if events is defined %}
-    {% for event in events %}
+    {% if paginator is defined %}
+    {% for event in paginator %}
     <tr class="table-secondary">
       <td><strong>Název:</strong> {{event.title}}</td>
       <td><strong>Jméno a příjmení:</strong> {{event.name}}</td>
       <td><strong>Datum:</strong> {{event.startDate|date('d/m/Y')}}-{{event.endDate|date('d/m/Y')}}</td>
     </tr>
     <tr>
-      <td colspan="3"><strong>Poznámky:</strong> <input style="width:100%;" type="text"></input></td>
+      <td colspan="3"><strong>Poznámky:</strong><input style="width:100%;" type="text"/></td>
     </tr>
   {% endfor %}
-{% endif %}
-</tbody>
-</table>
+    </tbody>
+  </table>
 </div>
+  <div class="row">
+    <a class="navigation" href="{{ prev }}">{{ prev }}</a><span class="nav-cur-page">{{page}}</span><a class="navigation" href="{{ next }}">{{ next }}</a>
+      </div>
+  {% endif %}
 </div>
+
+
 
 {% endblock %}
-
