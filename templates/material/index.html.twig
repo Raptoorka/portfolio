@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MaterialController!{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div id="materialPage">
+        <div class="row">
+            <table class="table table-bordered" id="materialTable">
+                <thead>
+                <tr>
+                    <th>Název</th>
+                    <th>Rozměr</th>
+                    <th>Cena za desku bez DPH</th>
+                    <th>Cena za m² bez DPH</th>
+                    <th>Cena za desku s DPH</th>
+                    <th>Cena za m² s DPH</th>
+                    <th>Počet desek</th>
+                    <th>Počet m²</th>
+                    <th>Cena za desky</th>
+                    <th>Cena za m²</th>
+                </tr>
+                </thead>
+                {% for material in materials %}
+                    <tr>
+                        <td><a href="/material/{{ material.id }}">{{ material.name }}</a></td>
+                        <td>{{ material.size }}</td>
+                        <td>{{ material.panelPrice }}</td>
+                        <td>{{ material.meterPrice }}</td>
+                        <td>{{ material.panelPrice*1.21 }}</td>
+                        <td>{{ material.meterPrice*1.21 }}</td>
+                        <td><input type="number" onchange="panelPrice(this,{{ material.panelPrice }})"/></td>
+                        <td><input type="number" onchange="meterPrice(this,{{ material.meterPrice }})"/></td>
+                        <td><input type="number" name="panelPrice" readonly/></td>
+                        <td><input type="number" name="meterPrice" readonly/></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <p id="finalPanelPrice"></p>
+        <p id="finalMeterPrice"></p>
+        {% if id is defined %}
+            <h2>Úprava materiálu</h2>
+        {% else %}
+            <h2>Přidání Materiálu</h2>
+        {% endif %}
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-2">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="col-2">
+                {{ form_row(form.size) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                {{ form_row(form.panelPrice) }}
+            </div>
+            <div class="col-2">
+                {{ form_row(form.meterPrice) }}
+            </div>
+        </div>
+        <div class="row">
+                {% if id is not defined %}
+            <div class="col-2">
+                    {{ form_row(form.delete, {'attr':{'disabled':'disabled'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_row(form.save) }}
+            </div>
+            {% else %}
+            <div class="col-2">
+                {{ form_row(form.delete) }}
+            </div>
+            <div class="col-2">
+                {{ form_row(form.save, {'label':'Upravit'}) }}
+            </div>
+            {% endif %}
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+    <script>
+        function panelPrice($this, panelPrice) {
+            $($this).parent().parent().find("input[name='panelPrice']").val(panelPrice * $($this).val());
+            finalPanelPrice = 0;
+            $("input[name=panelPrice]").each(function () {
+                finalPanelPrice += parseInt($(this).val());
+            })
+            $("#finalPanelPrice").text(
+                "Cena za desky bez DPH: " + finalPanelPrice + "Kč." +
+                " Cena za desky s DPH: " + finalPanelPrice * 1.21 + "Kč."
+            );
+        }
+
+        function meterPrice($this, meterPrice) {
+            $($this).parent().parent().find("input[name='meterPrice']").val(meterPrice * $($this).val());
+            finalMeterPrice = 0;
+            $("input[name=meterPrice]").each(function () {
+                finalMeterPrice += parseInt($(this).val());
+            })
+            $("#finalMeterPrice").text(
+                "Cena za m² bez DPH: " + finalMeterPrice + "Kč." +
+                " Cena za m² s DPH: " + finalMeterPrice * 1.21 + "Kč."
+            );
+        }
+    </script>
+    {% endblock %}

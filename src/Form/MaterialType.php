@@ -25,10 +25,15 @@ class MaterialType extends AbstractType
                 'label' => 'Cena za desku bez DPH'
             ])
             ->add('meterPrice',IntegerType::class,[
-                'label' => 'Cena za m2 bez DPH'
+                'label' => 'Cena za m² bez DPH'
             ])
             ->add('save', SubmitType::class,[
-                'label' => 'uložit'
+                'label' => 'Přidat',
+                 'attr' => ['class' => 'float-right btn-success']
+            ])
+            ->add('delete', SubmitType::class,[
+                'label' => 'Smazat',
+                 'attr' => ['class' => 'btn-danger']
             ]);
     }
 
