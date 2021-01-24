@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MaterialController!{% endblock %}
+{% block title %}Ceník materiálu{% endblock %}
 
 {% block body %}
 <div class="container-fluid">
@@ -31,8 +31,8 @@
                         <td>{{ material.meterPrice*1.21 }}</td>
                         <td><input type="number" onchange="panelPrice(this,{{ material.panelPrice }})"/></td>
                         <td><input type="number" onchange="meterPrice(this,{{ material.meterPrice }})"/></td>
-                        <td><input type="number" name="panelPrice" readonly/></td>
-                        <td><input type="number" name="meterPrice" readonly/></td>
+                        <td><input type="number" name="panelPrice" value="0" readonly/></td>
+                        <td><input type="number" name="meterPrice" value="0" readonly/></td>
                     </tr>
                 {% endfor %}
             </table>
