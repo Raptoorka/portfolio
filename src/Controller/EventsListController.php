@@ -13,7 +13,7 @@ use App\Entity\Event;
 class EventsListController extends AbstractController
 {
     /**
-     * @Route("/eventsList/{page}", name="eventsList")
+     * @Route("/eventsList", name="eventsList")
      */
     public function index(Request $request)
     {
