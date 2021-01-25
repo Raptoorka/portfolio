@@ -31,8 +31,8 @@
                         <td>{{ material.meterPrice*1.21 }}</td>
                         <td><input type="number" onchange="panelPrice(this,{{ material.panelPrice }})"/></td>
                         <td><input type="number" onchange="meterPrice(this,{{ material.meterPrice }})"/></td>
-                        <td><input type="number" name="panelPrice" value="0" readonly/></td>
-                        <td><input type="number" name="meterPrice" value="0" readonly/></td>
+                        <td><input type="number" name="panelPrice" readonly/></td>
+                        <td><input type="number" name="meterPrice" readonly/></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -87,7 +87,7 @@
             $($this).parent().parent().find("input[name='panelPrice']").val(panelPrice * $($this).val());
             finalPanelPrice = 0;
             $("input[name=panelPrice]").each(function () {
-                finalPanelPrice += parseInt($(this).val());
+                if($(this).val()) finalPanelPrice += parseInt($(this).val());
             })
             $("#finalPanelPrice").text(
                 "Cena za desky bez DPH: " + finalPanelPrice + "Kč." +
@@ -99,7 +99,7 @@
             $($this).parent().parent().find("input[name='meterPrice']").val(meterPrice * $($this).val());
             finalMeterPrice = 0;
             $("input[name=meterPrice]").each(function () {
-                finalMeterPrice += parseInt($(this).val());
+                if($(this).val()) finalMeterPrice += parseInt($(this).val());
             })
             $("#finalMeterPrice").text(
                 "Cena za m² bez DPH: " + finalMeterPrice + "Kč." +
