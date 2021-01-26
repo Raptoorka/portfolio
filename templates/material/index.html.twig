@@ -5,6 +5,7 @@
 {% block body %}
 <div class="container-fluid">
     <div id="materialPage">
+        <h2>Materiál</h2>
         <div class="row">
             <table class="table table-bordered" id="materialTable">
                 <thead>
@@ -23,7 +24,7 @@
                 </thead>
                 {% for material in materials %}
                     <tr>
-                        <td><a href="/material/{{ material.id }}">{{ material.name }}</a></td>
+                        <td><a href="/materialUpdate/{{ material.id }}">{{ material.name }}</a></td>
                         <td>{{ material.size }}</td>
                         <td>{{ material.panelPrice }}</td>
                         <td>{{ material.meterPrice }}</td>
@@ -39,47 +40,38 @@
         </div>
         <p id="finalPanelPrice"></p>
         <p id="finalMeterPrice"></p>
-        {% if id is defined %}
-            <h2>Úprava materiálu</h2>
-        {% else %}
-            <h2>Přidání Materiálu</h2>
-        {% endif %}
-
-        {{ form_start(form) }}
+        <h2>Příslušenství</h2>
         <div class="row">
-            <div class="col-2">
-                {{ form_row(form.name) }}
+            <table class="table table-bordered" id="materialTable">
+                <thead>
+                <tr>
+                    <th>Název</th>
+                    <th>Cena</th>
+                    <th>Cena s DPH</th>
+                    <th>Počet</th>
+                    <th>Cena za příslušenství</th>
+                </tr>
+                </thead>
+                {% for accessory in accessories %}
+                    <tr>
+                        <td><a href="/accessoryUpdate/{{ accessory.id }}">{{ accessory.name }}</a></td>
+                        <td>{{ accessory.price }}</td>
+                        <td>{{ accessory.price*1.21 }}</td>
+                        <td><input type="number" onchange="accessoryPrice(this,{{ accessory.price }})"/></td>
+                        <td><input type="number" name="accessoryPrice" readonly/></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <p id="finalAccessoryPrice"></p>
+        <div class="row">
+            <div class="col-4 offset-1">
+                {% include 'material/formMaterial.html.twig' %}
             </div>
-            <div class="col-2">
-                {{ form_row(form.size) }}
+            <div class="col-4 offset-2">
+                {% include 'material/formAccessory.html.twig' %}
             </div>
         </div>
-        <div class="row">
-            <div class="col-2">
-                {{ form_row(form.panelPrice) }}
-            </div>
-            <div class="col-2">
-                {{ form_row(form.meterPrice) }}
-            </div>
-        </div>
-        <div class="row">
-                {% if id is not defined %}
-            <div class="col-2">
-                    {{ form_row(form.delete, {'attr':{'disabled':'disabled'}}) }}
-            </div>
-            <div class="col-2">
-                {{ form_row(form.save) }}
-            </div>
-            {% else %}
-            <div class="col-2">
-                {{ form_row(form.delete) }}
-            </div>
-            <div class="col-2">
-                {{ form_row(form.save, {'label':'Upravit'}) }}
-            </div>
-            {% endif %}
-            </div>
-        {{ form_end(form) }}
     </div>
 </div>
     <script>
@@ -91,7 +83,7 @@
             })
             $("#finalPanelPrice").text(
                 "Cena za desky bez DPH: " + finalPanelPrice + "Kč." +
-                " Cena za desky s DPH: " + finalPanelPrice * 1.21 + "Kč."
+                " Cena za desky s DPH: " + (finalPanelPrice * 1.21).toFixed(2) + "Kč."
             );
         }
 
@@ -103,7 +95,18 @@
             })
             $("#finalMeterPrice").text(
                 "Cena za m² bez DPH: " + finalMeterPrice + "Kč." +
-                " Cena za m² s DPH: " + finalMeterPrice * 1.21 + "Kč."
+                " Cena za m² s DPH: " + (finalMeterPrice * 1.21).toFixed(2) + "Kč."
+            );
+        }
+        function accessoryPrice($this, accessoryPrice) {
+            $($this).parent().parent().find("input[name='accessoryPrice']").val(accessoryPrice * $($this).val());
+            finalAccessoryPrice = 0;
+            $("input[name=accessoryPrice]").each(function () {
+                if($(this).val()) finalAccessoryPrice += parseInt($(this).val());
+            })
+            $("#finalAccessoryPrice").text(
+                "Cena bez DPH: " + finalAccessoryPrice + "Kč." +
+                " Cena  s DPH: " + (finalAccessoryPrice * 1.21).toFixed(2) + "Kč."
             );
         }
     </script>
