@@ -1,0 +1,26 @@
+<h2>Příslušenství</h2>
+{{ form_start(formAccessory) }}
+<div class="row">
+    <div class="col">
+        {{ form_row(formAccessory.name) }}
+        {{ form_row(formAccessory.price) }}
+    </div>
+</div>
+<div class="row">
+    {% if accessoryId is not defined %}
+        <div class="col">
+            {{ form_row(formAccessory.delete, {'attr':{'disabled':'disabled'}}) }}
+        </div>
+        <div class="col">
+            {{ form_row(formAccessory.save) }}
+        </div>
+    {% else %}
+        <div class="col">
+            {{ form_row(formAccessory.delete) }}
+        </div>
+        <div class="col">
+            {{ form_row(formAccessory.save, {'label':'Upravit'}) }}
+        </div>
+    {% endif %}
+</div>
+{{ form_end(formAccessory) }}

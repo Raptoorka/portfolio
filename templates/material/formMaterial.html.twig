@@ -1,0 +1,36 @@
+<h2>Materiál</h2>
+{{ form_start(formMaterial) }}
+<div class="row">
+    <div class="col">
+        {{ form_row(formMaterial.name) }}
+    </div>
+    <div class="col">
+        {{ form_row(formMaterial.size) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        {{ form_row(formMaterial.panelPrice) }}
+    </div>
+    <div class="col">
+        {{ form_row(formMaterial.meterPrice) }}
+    </div>
+</div>
+<div class="row">
+    {% if materialId is not defined %}
+        <div class="col">
+            {{ form_row(formMaterial.delete, {'attr':{'disabled':'disabled'}}) }}
+        </div>
+        <div class="col">
+            {{ form_row(formMaterial.save) }}
+        </div>
+    {% else %}
+        <div class="col">
+            {{ form_row(formMaterial.delete) }}
+        </div>
+        <div class="col">
+            {{ form_row(formMaterial.save, {'label':'Upravit'}) }}
+        </div>
+    {% endif %}
+</div>
+{{ form_end(formMaterial) }}
